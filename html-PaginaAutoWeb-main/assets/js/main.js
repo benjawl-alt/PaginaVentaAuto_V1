@@ -42,14 +42,15 @@
 
 	// Nav.
 
-		// Title Bar.
-			$(
-				'<div id="titleBar">' +
-					'<a href="#navPanel" class="toggle"></a>' +
-					'<span class="title">' + $('#logo').html() + '</span>' +
-				'</div>'
-			)
-				.appendTo($body);
+		var logoHTML = $('#logo').length ? $('#logo').html() : 'IgnaBen Motors';
+
+$(
+    '<div id="titleBar">' +
+        '<a href="#navPanel" class="toggle"></a>' +
+        '<span class="title">' + logoHTML + '</span>' +
+    '</div>'
+)
+.appendTo($body);
 
 		// Panel.
 			$(

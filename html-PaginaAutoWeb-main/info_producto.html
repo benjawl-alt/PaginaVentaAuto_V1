@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Detalle del Producto</title>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+</head>
+<body class="is-preload">
+
+  <div id="page-wrapper">
+
+    <!-- Header -->
+    <header id="header">
+      <h1 id="logo"><a href="index.html">Inicio</a></h1>
+      <nav id="nav">
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="elements.html">Modelos</a></li>
+          <li><a href="carrito.html">Carrito</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Main -->
+    <div id="main" class="wrapper style1">
+      <div class="container">
+        <header class="major">
+          <h2 id="nombreProducto">Producto</h2>
+          <p id="descripcionProducto"></p>
+        </header>
+
+        <section id="detalleProducto" class="products-list">
+          <!-- Imagen y precio se generarán con JS -->
+        </section>
+
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <ul class="icons">
+        <li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+        <li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+        <li><a href="#" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+        <li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+      </ul>
+      <ul class="copyright">
+        <li>&copy; Tu Empresa. Todos los derechos reservados.</li>
+        <li>Diseño: <a href="http://html5up.net">HTML5 UP</a></li>
+      </ul>
+    </footer>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/jquery.scrolly.min.js"></script>
+  <script src="assets/js/jquery.dropotron.min.js"></script>
+  <script src="assets/js/jquery.scrollex.min.js"></script>
+  <script src="assets/js/browser.min.js"></script>
+  <script src="assets/js/breakpoints.min.js"></script>
+  <script src="assets/js/util.js"></script>
+  <script src="assets/js/main.js"></script>
+
+  <!-- Script de detalle del producto y carrito -->
+  <script>
+    // Lista de productos deportivos
+    const productos = [
+      {
+        id: 1,
+        nombre: "Mustang 2025",
+        precio: 51000000,
+        descripcion: "Potencia, estilo y tecnología en el nuevo Mustang 2025.",
+        imagen: "images/mustang.jpg"
+      },
+      {
+        id: 2,
+        nombre: "BMW M3 Competicion 2025",
+        precio: 126000000,
+        descripcion: "Lujo y deportividad con motor biturbo y tracción total.",
+        imagen: "images/m3competicion.jpg"
+      },
+      {
+        id: 3,
+        nombre: "Audi R8",
+        precio: 150000000,
+        descripcion: "Superdeportivo V10 con sonido inconfundible y diseño elegante.",
+        imagen: "images/audir8.jpg"
+      },
+      {
+        id: 4,
+        nombre: "Subaru WRX 2025",
+        precio: 33000000,
+        descripcion: "Tracción total y motor turbo para conducción dinámica.",
+        imagen: "images/wrx.jpg"
+      }
+    ];
+
+    // Obtener ID del producto desde URL
+    const params = new URLSearchParams(window.location.search);
+    const id = parseInt(params.get("id"));
+
+    // Encontrar el producto
+    const producto = productos.find(p => p.id === id);
+
+    if (producto) {
+      document.getElementById("nombreProducto").textContent = producto.nombre;
+      document.getElementById("descripcionProducto").textContent = producto.descripcion;
+
+      const detalle = document.getElementById("detalleProducto");
+      detalle.innerHTML = `
+        <article class="product">
+          <img src="${producto.imagen}" alt="${producto.nombre}" class="image fit" />
+          <p><strong>Precio:</strong> $${producto.precio.toLocaleString("es-CL")}</p>
+          <button onclick="agregarAlCarrito(${producto.id})" class="button primary">Comprar</button>
+        </article>
+      `;
+    } else {
+      document.getElementById("detalleProducto").innerHTML = "<p>Producto no encontrado.</p>";
+    }
+
+    // Carrito desde LocalStorage
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+    function agregarAlCarrito(id) {
+      const prod = productos.find(p => p.id === id);
+      carrito.push(prod);
+      localStorage.setItem("carrito", JSON.stringify(carrito));
+      alert(`${prod.nombre} fue agregado al carrito ✅`);
+    }
+  </script>
+
+</body>
+</html>
